@@ -1,10 +1,11 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{JPRCSReport}[2013/06/16 V0.03 Jens Raaby]
-% based partly on University of York style by JLJ http://www-users.cs.york.ac.uk/~jeremy/
+
+% This style is based partly on University of York style by J.L.Jacob http://www-users.cs.york.ac.uk/~jeremy/
+\ProvidesClass{JPRCSReport}[2014/04/01 V0.05 Jens Raaby]
 
 % Koma-script report style
 \PassOptionsToPackage{twoside}{typearea}
-\LoadClass[11pt,a4paper,twoside,abstraction,numbers=noenddot,BCOR13mm,DIV=calc]{scrreprt}
+\LoadClass[11pt,a4paper,twoside,abstraction,numbers=noenddot,DIV=11,BCOR=10mm,headinclude=true,footinclude=false]{scrreprt}
 
 
 \RequirePackage[utf8]{inputenc} 
@@ -26,12 +27,19 @@
 \RequirePackage[numbers,sort&compress,square,comma]{natbib}
 \bibliographystyle{IEEEtranN}
 
-\typearea[current]{calc} % force page layout recalculation after
+%\typearea[current]{calc} % force page layout recalculation after
                          % changing all the fonts
                          
-                         
+% Uncomment for draft date                         
 %\date{\fbox{\Huge DRAFT PROCESSED \today}}
-\titlehead{The University of Copenhagen\hfill Department of Computer Science}
+
+\RequirePackage{amsmath}
+\RequirePackage{amsfonts}
+\RequirePackage{amssymb}
+\RequirePackage{graphicx,subcaption,caption}
+\RequirePackage{eso-pic} % \AddToShipoutPicture
+\RequirePackage[export]{adjustbox}[2011/08/13]
+\RequirePackage{placeins}
 
 
 \RequirePackage[pdfusetitle]{hyperref}% automatic hyperlinks, etc
@@ -61,17 +69,14 @@
 
 \let\old@maketitle=\maketitle
 \renewcommand*{\maketitle}{%
+
+\AddToShipoutPicture*{\put(0,0){\includegraphics*[viewport=0 0 700 600]{nat-farve}}}
+\AddToShipoutPicture*{\put(0,602){\includegraphics*[viewport=0 600 700 1600]{nat-farve}}}
+\AddToShipoutPicture*{\put(0,0){\includegraphics*{nat-en}}}
+
+
   \old@maketitle%
-  % \ifx\JPRREPORT@abstract\undefined%
-%     \ClassError%
-%     {JPRCSReport}%
-%     {No abstract!}%
-%     {Declare an abstract in the preamble using \protect\abstract{Text}.}
-%   \else%
-%     \begin{old@abstract}%
-%       \JPRREPORT@abstract%
-%     \end{old@abstract}%
-%   \fi%
+
    \microtypesetup{protrusion=false}%
   \tableofcontents%  
   \microtypesetup{protrusion=true}%
